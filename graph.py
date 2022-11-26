@@ -53,7 +53,7 @@ class Graph:
         except networkx.exception.NetworkXError:
             print('Ataque crítico: a rede não está mais conectda')
             return False
-        return print(f'grafo critíco para manter a rede conectada: {cf_robustness}\ncoeficiente de clusterização da rede: {clustering}')
+        return print(f'grafo crítico para manter a rede conectada: {cf_robustness}\ncoeficiente de clusterização da rede: {clustering}')
 
     def __plot_graph_img(self):
         plt.figure(2)
