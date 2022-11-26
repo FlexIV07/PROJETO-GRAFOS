@@ -51,7 +51,7 @@ class Graph:
             cf_robustness = networkx.minimum_node_cut(graph)  #calcula a robustez do grafo pelo grafo crítico para conexâo dos nós
             clustering = networkx.algorithms.approximation.average_clustering(graph)
         except networkx.exception.NetworkXError:
-            print('Ataque crítico: a rede não está mais conectda')
+            print('Ataque crítico: a rede não está mais conectada')
             return False
         return print(f'grafo crítico para manter a rede conectada: {cf_robustness}\ncoeficiente de clusterização da rede: {clustering}')
 
