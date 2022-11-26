@@ -1,4 +1,10 @@
 """Código do projeto de CR para a analise de robustez e resiliência de redes complexas."""
+
+"""Comando para instalar as libs necessárias:"""
+        """pip install networkx
+           python -m pip install -U pip
+           python -m pip install -U matplotlib"""
+
 import networkx
 import matplotlib.pyplot as plt
 import random
