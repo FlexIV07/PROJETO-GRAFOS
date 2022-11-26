@@ -48,10 +48,11 @@ class Graph:
     def __calculate_robustness(self, graph):
         try:
             cf_robustness = networkx.minimum_node_cut(graph)  #calcula a robustez do grafo pelo grafo crítico para conexâo dos nós
-        except:
+            clustering = networkx.algorithms.approximation.average_clustering(graph)
+        except networkx.exception.NetworkXError:
             print('Ataque crítico: a rede não está mais conectda')
             return False
-        return print(f'grafo critíco para manter a rede conectada: {cf_robustness}')
+        return print(f'grafo critíco para manter a rede conectada: {cf_robustness}\ncoeficiente de clusterização da rede: {clustering}')
 
     def __plot_graph_img(self):
         plt.figure(2)
@@ -64,12 +65,11 @@ class Graph:
         self.__build_graph()
         self.__plot_graph_img()
         while self.__graph_obj.number_of_nodes() != 0:
-            print(self.__graph_obj.number_of_nodes())
             self.__drop_node()
+            self.__plot_graph_img()
             self.__calculate_resilience(self.__graph_obj)
             if self.__calculate_robustness(self.__graph_obj) == False:
                 break
-            self.__plot_graph_img()
 
 
 grafo = Graph()
