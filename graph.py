@@ -30,6 +30,7 @@ class Graph:
     def __drop_node(self):
         random_node = random.randrange(1, self.__graph_obj.number_of_nodes())  #sorteia um n aleatório no range da quantidade de nós do grafo
         try:
+            print(f"Nó sofrendo ataque: {random_node}")
             self.__graph_obj.remove_node(random_node)  #remove o nó sorteado
         except networkx.exception.NetworkXError:
             pass
@@ -39,7 +40,11 @@ class Graph:
         return print(f'coeficiente resiliência do grafo: {cf_resilience}')
 
     def __calculate_robustness(self, graph):
-        cf_robustness = networkx.minimum_node_cut(graph)  #calcula a robustez do grafo pelo grafo crítico para conexâo dos nós
+        try:
+            cf_robustness = networkx.minimum_node_cut(graph)  #calcula a robustez do grafo pelo grafo crítico para conexâo dos nós
+        except:
+            print('Ataque crítico: a rede não está mais conectda')
+            return False
         return print(f'grafo critíco para manter a rede conectada: {cf_robustness}')
 
     def __plot_graph_img(self):
@@ -56,7 +61,8 @@ class Graph:
             print(self.__graph_obj.number_of_nodes())
             self.__drop_node()
             self.__calculate_resilience(self.__graph_obj)
-            self.__calculate_robustness(self.__graph_obj)
+            if self.__calculate_robustness(self.__graph_obj) == False:
+                break
             self.__plot_graph_img()
 
 
