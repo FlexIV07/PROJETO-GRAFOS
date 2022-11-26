@@ -1,0 +1,64 @@
+"""Código do projeto de CR para a analise de robustez e resiliência de redes complexas."""
+import networkx
+import matplotlib.pyplot as plt
+import random
+
+
+class Graph:
+    """Classe responsavél por criar e manipular o grafo."""
+
+    def __init__(self):
+        """Inicializador da classe Graph."""
+        self.__graph_obj = networkx.Graph()  #obj da graph da lib nertworkx
+
+    def __build_graph(self):
+        self.__graph_obj.add_nodes_from([1, 2, 3, 4, 5, 6, 7, 8])  #build dos nós
+        self.__graph_obj.add_edges_from([
+                                        (1, 3),
+                                        (3, 2),
+                                        (3, 5),
+                                        (2, 5),
+                                        (5, 4),
+                                        (5, 7),
+                                        (5, 6),
+                                        (4, 6),
+                                        (6, 7),
+                                        (6, 8),
+                                        (7, 8)
+                                        ])  #build das arestas
+
+    def __drop_node(self):
+        random_node = random.randrange(1, self.__graph_obj.number_of_nodes())  #sorteia um n aleatório no range da quantidade de nós do grafo
+        try:
+            self.__graph_obj.remove_node(random_node)  #remove o nó sorteado
+        except networkx.exception.NetworkXError:
+            pass
+
+    def __calculate_resilience(self, graph):
+        cf_resilience = networkx.density(graph)  #calcula a resiliência do grafo
+        return print(f'coeficiente resiliência do grafo: {cf_resilience}')
+
+    def __calculate_robustness(self, graph):
+        cf_robustness = networkx.minimum_node_cut(graph)  #calcula a robustez do grafo pelo grafo crítico para conexâo dos nós
+        return print(f'grafo critíco para manter a rede conectada: {cf_robustness}')
+
+    def __plot_graph_img(self):
+        plt.figure(2)
+        networkx.draw_networkx(self.__graph_obj,
+                               pos=networkx.spring_layout(self.__graph_obj),
+                               with_labels=True)
+        plt.show()
+
+    def run(self):
+        self.__build_graph()
+        self.__plot_graph_img()
+        while self.__graph_obj.number_of_nodes() != 0:
+            print(self.__graph_obj.number_of_nodes())
+            self.__drop_node()
+            self.__calculate_resilience(self.__graph_obj)
+            self.__calculate_robustness(self.__graph_obj)
+            self.__plot_graph_img()
+
+
+grafo = Graph()
+grafo.run()
