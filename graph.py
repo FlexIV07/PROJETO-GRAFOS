@@ -43,7 +43,7 @@ class Graph:
 
     def __calculate_resilience(self, graph):
         cf_resilience = networkx.density(graph)  #calcula a resiliência do grafo
-        return print(f'coeficiente resiliência do grafo: {cf_resilience}')
+        return print(f'coeficiente resiliência da rede: {cf_resilience}')
 
     def __calculate_robustness(self, graph):
         try:
